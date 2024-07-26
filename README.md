@@ -10,7 +10,7 @@ Full backend for book management system
 <div>
 <span>Architecture</span><br>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4c5533c2-6974-4b4e-a899-3a40374c5b8c" width="70%" height="70%">
+  <img src="https://github.com/user-attachments/assets/4c5533c2-6974-4b4e-a899-3a40374c5b8c" width="100%" height="100%">
 </p>
 <span>Class Diagram</span><br>
 <p align="center">
