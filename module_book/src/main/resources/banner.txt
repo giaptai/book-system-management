@@ -1,0 +1,8 @@
+${AnsiBackground.GREEN}
+${AnsiStyle.ITALIC}${AnsiStyle.BOLD}${AnsiColor.BRIGHT_WHITE}.______     ______     ______    __  ___         _______.___________.  ______   .______       _______
+${AnsiColor.BRIGHT_WHITE}|   _  \   /  __  \   /  __  \  |  |/  /        /       |           | /  __  \  |   _  \     |   ____|
+${AnsiColor.BRIGHT_WHITE}|  |_)  | |  |  |  | |  |  |  | |  '  /        |   (----`---|  |----`|  |  |  | |  |_)  |    |  |__
+${AnsiColor.BRIGHT_WHITE}|   _  <  |  |  |  | |  |  |  | |    <          \   \       |  |     |  |  |  | |      /     |   __|
+${AnsiColor.BRIGHT_WHITE}|  |_)  | |  `--'  | |  `--'  | |  .  \     .----)   |      |  |     |  `--'  | |  |\  \----.|  |____
+${AnsiColor.BRIGHT_WHITE}|______/   \______/   \______/  |__|\__\    |_______/       |__|      \______/  | _| `._____||_______|
+${AnsiBackground.BLACK}
