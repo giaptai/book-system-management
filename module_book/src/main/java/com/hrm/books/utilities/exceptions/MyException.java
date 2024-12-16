@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
@@ -55,21 +54,21 @@ public class MyException extends RuntimeException {
         }
     }
 
-    @RestController
+//    @RestController
     @RestControllerAdvice
     public class RestExceptionHandler {
         @ExceptionHandler(value = myGlobalError.class)
-        public ResponseEntity<ApiErrors<String>> hadnleGlobal() {
+        public ResponseEntity<ApiErrors<String>> handleGlobal() {
             return new ResponseEntity<>(apiErrors, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         @ExceptionHandler(value = ErrorNotFound.class)
-        public ResponseEntity<ApiErrors<String>> hadnleNotFound() {
+        public ResponseEntity<ApiErrors<String>> handleNotFound() {
             return new ResponseEntity<>(apiErrors, HttpStatus.NOT_FOUND);
         }
 
         @ExceptionHandler(value = ErrorMaxLimit.class)
-        public ResponseEntity<ApiErrors<String>> hadnleMaxLimit() {
+        public ResponseEntity<ApiErrors<String>> handleMaxLimit() {
             return new ResponseEntity<>(apiErrors, HttpStatus.CONFLICT);
         }
 

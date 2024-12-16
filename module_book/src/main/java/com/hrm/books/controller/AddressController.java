@@ -37,5 +37,4 @@ public class AddressController {
 //    public ResponseEntity<Boolean> del(@RequestParam(name = "ids") int[] ids) {
 //        return new ResponseEntity<>(addressService.del(ids), HttpStatus.OK);
 //    }
-
 }
