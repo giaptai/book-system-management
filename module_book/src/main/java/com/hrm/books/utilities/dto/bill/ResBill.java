@@ -3,6 +3,7 @@ package com.hrm.books.utilities.dto.bill;
 import com.hrm.books.utilities.dto.visitor.ResVisitorAuth;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record ResBill(
@@ -13,7 +14,8 @@ public record ResBill(
         String buyerName,
         String buyerPhone,
         String deliveryAddress,
-        ResVisitorAuth visitor
+        ResVisitorAuth visitor,
+        String create_at
 ) implements Serializable {
 
 }

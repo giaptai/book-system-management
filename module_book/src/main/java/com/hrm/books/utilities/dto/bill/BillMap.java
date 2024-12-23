@@ -7,6 +7,7 @@ import com.hrm.books.models.Visitor;
 import com.hrm.books.utilities.enums.State;
 import com.hrm.books.utilities.dto.visitor.VisitorMap;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class BillMap {
@@ -33,7 +34,8 @@ public class BillMap {
                 bill.getBuyerName(),
                 bill.getBuyerPhoneNumber(),
                 bill.getDeliveryAddress(),
-                VisitorMap.MapToResVisitorBuy(bill.getVisitorId())
+                VisitorMap.MapToResVisitorBuy(bill.getVisitorId()),
+                bill.getCreate_at().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
         );
     }
 

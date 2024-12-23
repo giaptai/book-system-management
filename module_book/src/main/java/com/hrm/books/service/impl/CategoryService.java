@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,11 +37,16 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public AnnounceResponse<ResCategory[]> add(ReqCategory[] reqCategories) {
-        List<Category> list = Arrays.stream(reqCategories).map(CategoryMap::MapToCategory).toList();
-        return new AnnounceResponse<>(
-                HttpStatus.CREATED.value(),
-                categoryRepository.saveAll(list).stream().map(CategoryMap::MapToResCategory).toArray(value -> new ResCategory[value])
-        );
+        try{
+            List<Category> list = Arrays.stream(reqCategories).map(CategoryMap::MapToCategory).toList();
+            return new AnnounceResponse<>(
+                    HttpStatus.CREATED.value(),
+                    categoryRepository.saveAll(list).stream().map(CategoryMap::MapToResCategory).toArray(value -> new ResCategory[value])
+            );
+        }catch (Exception e){
+            throw myEx.new myGlobalError("Trùng lặp giá trị");
+        }
+
     }
 
     @Override
@@ -81,7 +87,9 @@ public class CategoryService implements ICategoryService {
             predicateCount.add(categoryNamePredicateCount);
         }
 
-        cq.orderBy(nameOrder.equals("ASC") ? cb.asc(categoryRoot.get("name")) : cb.desc(categoryRoot.get("name")));
+//        cq.orderBy(nameOrder.equals("ASC") ? cb.asc(categoryRoot.get("name")) : cb.desc(categoryRoot.get("name")), cb.asc(categoryRoot.get("create_at")));
+        cq.orderBy(cb.desc(categoryRoot.get("create_at")));
+
         cqCount.select(cb.count(countRoot));
 
         if (!predicates.isEmpty()) {

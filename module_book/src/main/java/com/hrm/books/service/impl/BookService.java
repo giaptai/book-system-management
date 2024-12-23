@@ -12,7 +12,7 @@ import com.hrm.books.models.Book;
 import com.hrm.books.service.IBookService;
 import com.hrm.books.utilities.dto.book.ResBook;
 import com.hrm.books.utilities.dto.book.ResBookDetail;
-import com.hrm.books.utilities.rabbitmq.ProducerRabbit;
+// import com.hrm.books.utilities.rabbitmq.ProducerRabbit;
 import com.hrm.books.utilities.responses.AnnounceResponse;
 import com.hrm.books.utilities.responses.DataResponse;
 import jakarta.persistence.EntityManager;

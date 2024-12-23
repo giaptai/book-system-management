@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -17,7 +18,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,15 +38,17 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors(this::corsConfigurationSource)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->
                                 //https://stackoverflow.com/questions/70906081/springboot-swagger3-failed-to-load-remote-configuration
                                 registry
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/category/**", "/book/**", "/author/**", "/statistics/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/login", "/register", "/buy").permitAll()
-                                .requestMatchers("/my-account/**").hasRole("USER")
-                                .anyRequest().hasAnyRole("WORKER", "ADMIN", "GOD")
+                                .anyRequest().permitAll()
+                                // .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                // .requestMatchers(HttpMethod.GET, "/category/**", "/book/**", "/author/**", "/statistics/**").permitAll()
+                                // .requestMatchers(HttpMethod.POST, "/login", "/register", "/buy").permitAll()
+                                // .requestMatchers("/my-account/**").hasRole("USER")
+                                // .anyRequest().hasAnyRole("WORKER", "ADMIN", "GOD")
                 )
                 .exceptionHandling(exceptionHandler ->
                         exceptionHandler
@@ -56,6 +61,27 @@ public class SecurityConfiguration {
                 );
         return httpSecurity.build();
     }
+
+    void corsConfigurationSource(CorsConfigurer<HttpSecurity> security) {
+        security.configurationSource(
+                request -> {
+                    CorsConfiguration configuration = new CorsConfiguration();
+                    configuration.setAllowedOrigins(Arrays.asList("*"));
+                    configuration.setAllowedMethods(Arrays.asList("*"));
+                    configuration.setAllowedHeaders(Arrays.asList("*"));
+                    return configuration;
+                }
+
+        );
+    }
+
+//    cors -> cors.configurationSource(request -> {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("*"));
+//        configuration.setAllowedHeaders(Arrays.asList("*"));
+//        return configuration;
+//    }))
 
     @Bean
     public UserDetailsService userDetailsService() {

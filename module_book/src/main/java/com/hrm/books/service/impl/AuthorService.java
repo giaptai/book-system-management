@@ -173,7 +173,7 @@ public class AuthorService implements IAuthorService {
             Predicate bookNamePredicate = cb.like(cb.lower(bookJoin.get("title")), "%" + bookName.toLowerCase() + "%");
             predicates.add(bookNamePredicate);
         }
-        cq.orderBy(nameOrder.equals("DESC") ? cb.desc(authorRoot.get("name")) : cb.asc(authorRoot.get("name")));
+        cq.orderBy(cb.desc(authorRoot.get("create_at")) ,nameOrder.equals("DESC") ? cb.desc(authorRoot.get("name")) : cb.asc(authorRoot.get("name"))).distinct(true);
 
         if (!predicates.isEmpty()) {
             cq.where(cb.and(predicates.toArray(new Predicate[0])));

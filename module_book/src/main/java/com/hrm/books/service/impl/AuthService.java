@@ -19,7 +19,7 @@ import com.hrm.books.utilities.dto.bill.ResBillDetail;
 import com.hrm.books.utilities.dto.visitor.ReqVisitor;
 import com.hrm.books.utilities.dto.visitor.ResVisitorDetail;
 import com.hrm.books.utilities.dto.visitor.VisitorMap;
-import com.hrm.books.utilities.rabbitmq.ProducerRabbit;
+// import com.hrm.books.utilities.rabbitmq.ProducerRabbit;
 import com.hrm.books.utilities.regex.MyPattern;
 import com.hrm.books.utilities.responses.AnnounceResponse;
 import org.springframework.http.HttpStatus;
@@ -42,16 +42,18 @@ public class AuthService {
     private final CurrentUserContext currentUserContext;
     private final MyException myE;
     private final ObjectMapper mapper = new ObjectMapper();
-    private final ProducerRabbit producerRabbit;
+    // private final ProducerRabbit producerRabbit;
 
-    public AuthService(AddressRepository addressRepository, VisitorRepository visitorRepository, AddressService addressService, BillService billService, CurrentUserContext currentUserContext, MyException myE, ProducerRabbit producerRabbit) {
+    public AuthService(AddressRepository addressRepository, VisitorRepository visitorRepository, AddressService addressService, BillService billService, CurrentUserContext currentUserContext, MyException myE
+    // ProducerRabbit producerRabbit
+    ) {
         this.addressRepository = addressRepository;
         this.visitorRepository = visitorRepository;
         this.addressService = addressService;
         this.billService = billService;
         this.currentUserContext = currentUserContext;
         this.myE = myE;
-        this.producerRabbit = producerRabbit;
+        // this.producerRabbit = producerRabbit;
     }
 
     /**
@@ -159,7 +161,7 @@ public class AuthService {
             }
             visitor.setPassword("{noop}" + reqVisitor.password());
             visitorRepository.save(visitor);
-            producerRabbit.sendMessage(RMQQueueName.CHANGE_PASSWORD.getValue(), new PVisitor(visitor.getEmail(), visitor.getUsername(), visitor.getPassword()));
+            // producerRabbit.sendMessage(RMQQueueName.CHANGE_PASSWORD.getValue(), new PVisitor(visitor.getEmail(), visitor.getUsername(), visitor.getPassword()));
 //            emailInit.sendSimpleMail(reqVisitor.email(), "CHANGE PASSWORD SUCCESSFULLY !!!",
 //                    "Hi " + visitor.getUsername() + ",\n\n" +
 //                            "Your new password: " + reqVisitor.password() +
@@ -178,7 +180,7 @@ public class AuthService {
             }
             visitor.setEmail(reqVisitor.email());
             visitorRepository.save(visitor);
-            producerRabbit.sendMessage(RMQQueueName.CHANGE_EMAIL.getValue(), new PVisitor(visitor.getEmail(), visitor.getUsername(), visitor.getPassword()));
+            // producerRabbit.sendMessage(RMQQueueName.CHANGE_EMAIL.getValue(), new PVisitor(visitor.getEmail(), visitor.getUsername(), visitor.getPassword()));
 //            emailInit.sendSimpleMail(reqVisitor.email(), "CHANGE EMAIL SUCCESSFULLY !!!",
 //                    "Hi " + visitor.getUsername() + ",\n\n" +
 //                            "We will now be using this address for all future communication, including important updates, invoices, and project information.\n\n" +

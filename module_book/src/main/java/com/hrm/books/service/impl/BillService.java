@@ -18,7 +18,7 @@ import com.hrm.books.utilities.dto.bill.ReqBill;
 import com.hrm.books.utilities.dto.bill.ResBill;
 import com.hrm.books.utilities.dto.bill.ResBillDetail;
 import com.hrm.books.utilities.dto.book.ReqBookBuy;
-import com.hrm.books.utilities.rabbitmq.ProducerRabbit;
+// import com.hrm.books.utilities.rabbitmq.ProducerRabbit;
 import com.hrm.books.utilities.responses.AnnounceResponse;
 import com.hrm.books.utilities.responses.DataResponse;
 import jakarta.persistence.EntityManager;
@@ -50,7 +50,7 @@ public class BillService implements IBillService {
     final private EntityManager em;
     final private MyException myEx;
     final private CurrentUserContext currentUserContext;
-    final private ProducerRabbit producerRabbit;
+    // final private ProducerRabbit producerRabbit;
 
     @Override
     public DataResponse<List<ResBill>> getAllHasFilter(String username, State state, int page, int size) {
@@ -68,7 +68,7 @@ public class BillService implements IBillService {
         );
         List<ResBill> resBills = bills.stream().map(BillMap::MapToResBill).toList();
         billRepository.saveAll(bills);
-        producerRabbit.sendMessage(RMQQueueName.PURCHASE_STATE.getValue(), resBills);
+        // producerRabbit.sendMessage(RMQQueueName.PURCHASE_STATE.getValue(), resBills);
         return new AnnounceResponse<>(
                 HttpStatus.ACCEPTED.value(),
                 resBills
@@ -133,7 +133,7 @@ public class BillService implements IBillService {
             bookRepository.saveAll(books);
             billRepository.save(bill);
             ResBillDetail resBillDetail = BillMap.MapToResBillDetail(bill);
-            producerRabbit.sendMessage(RMQQueueName.PURCHASE.getValue(), resBillDetail);
+            // producerRabbit.sendMessage(RMQQueueName.PURCHASE.getValue(), resBillDetail);
             return BillMap.MapToResBill(bill);
         } catch (RuntimeException r) {
             System.err.println(r.getMessage());

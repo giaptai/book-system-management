@@ -15,7 +15,7 @@ import com.hrm.books.models.Visitor;
 import com.hrm.books.service.IVisitorService;
 import com.hrm.books.utilities.dto.visitor.ResVisitorDetail;
 import com.hrm.books.utilities.dto.visitor.VisitorMap;
-import com.hrm.books.utilities.rabbitmq.ProducerRabbit;
+// import com.hrm.books.utilities.rabbitmq.ProducerRabbit;
 import com.hrm.books.utilities.regex.MyPattern;
 import com.hrm.books.utilities.responses.AnnounceResponse;
 import com.hrm.books.utilities.responses.DataResponse;
@@ -37,6 +37,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,7 +52,7 @@ public class VisitorService implements IVisitorService {
     final AuthenticationManager authenticationManager;
     final JWTService jwtService;
     final MyException myEx;
-    final ProducerRabbit producerRabbit;
+    // final ProducerRabbit producerRabbit;
 
     @Override
     public ResLogin login(Login login) {
@@ -87,7 +88,7 @@ public class VisitorService implements IVisitorService {
 //                StringBuilder builder = new StringBuilder("Username: " + resVisitor.username());
 //                builder.append("\n").append("Password: ").append(reqVisitor.password());
 //                producerRabbit.sendSimpleMessage(visitorRabbit.toString());
-                producerRabbit.sendMessage(RMQQueueName.REGISTER.getValue(), PVisitor);
+                // producerRabbit.sendMessage(RMQQueueName.REGISTER.getValue(), PVisitor);
 //                emailInit.sendSimpleMail(resVisitor.email(), "Register successfully !!!", builder.toString());
             }
         }
@@ -173,9 +174,10 @@ public class VisitorService implements IVisitorService {
             predicatesCount.add(preUsernameCount);
         }
         if (role != null && role.length > 0) {
-//            Predicate preRole =  visitorR.get("role").in(Arrays.asList(role));
-            Predicate preRole = cb.in(visitorR.get("role")).value(role);
-            Predicate preRoleCount = cb.in(visitorRCount.get("role")).value(role);
+            Predicate preRole =  visitorR.get("role").in(Arrays.asList(role));
+//            Predicate preRole = cb.in(visitorR.get("role")).value(role);
+//            Predicate preRoleCount =  visitorR.get("role").in(Arrays.asList(role));
+            Predicate preRoleCount = cb.in(visitorRCount.get("role")).value(Arrays.asList(role));
             predicates.add(preRole);
             predicatesCount.add(preRoleCount);
         }
